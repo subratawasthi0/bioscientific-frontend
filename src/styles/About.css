@@ -1,0 +1,213 @@
+/* src/styles/About.css */
+
+/* --- Page Wrapper (Unique: about-page-wrapper) --- */
+.about-page-wrapper {
+  /* 50% Dark Blue, 50% Pure White */
+  background: linear-gradient(180deg, #001c3d 0%, #0a3a68 50%, #ffffff 50%, #ffffff 100%) !important; 
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+/* --- Header --- */
+.about-page-header {
+  text-align: center;
+  padding: 60px 20px 30px;
+}
+
+.about-page-header h1 {
+  font-size: 3rem;
+  margin: 0;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.about-page-header p {
+  font-size: 1.2rem;
+  margin-top: 15px;
+  color: rgba(255, 255, 255, 0.8);
+  position: relative;
+  display: inline-block;
+}
+
+.about-page-header p::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background-color: #0aa5ad;
+  border-radius: 2px;
+}
+
+/* --- Main Container --- */
+.about-page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+/* --- Hero Layout --- */
+.about-page-hero {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.about-page-image {
+  flex: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  height: 400px;
+}
+
+.about-page-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about-page-text {
+  flex: 1;
+}
+
+.about-page-subtitle {
+  color: #0aa5ad;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.about-page-text h2 {
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.about-page-text p {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* --- Stats --- */
+.about-page-stats {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.about-page-stat-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #0a3a68;
+  padding: 12px 15px;
+  border-radius: 8px;
+  flex: 1;
+  min-width: 130px;
+}
+
+.about-page-stat-icon { color: #ffffff; font-size: 1.5rem; }
+.about-page-stat-number { color: #ffffff; font-size: 1.4rem; font-weight: 800; line-height: 1.1; }
+.about-page-stat-label { color: rgba(255, 255, 255, 0.7); font-size: 0.8rem; line-height: 1.2; margin-top: 2px; }
+
+/* =========================================================
+   WHITE BOX (Unique: about-page-cards-grid)
+   ========================================================= */
+.about-page-cards-grid {
+  background: #ffffff !important;
+  border-radius: 20px;
+  
+  width: 90%;
+  max-width: 900px;
+  min-height: 280px;
+  margin: 0 auto 80px auto; 
+  
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+.about-page-card-item {
+  padding: 20px 30px;
+  text-align: center;
+  border-right: 1px solid #e5e7eb !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-page-card-item:last-child { border-right: none !important; }
+
+/* Hollow/Outline Teal Icons */
+.about-page-card-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 20px;
+  background: transparent !important; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none !important;
+}
+
+.about-page-card-icon i {
+  font-size: 2.5rem;
+  color: #0aa5ad !important;
+}
+
+.about-page-card-item h3 {
+  color: #002d5a !important; 
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  font-weight: 800;
+}
+
+.about-page-card-item p {
+  color: #555 !important;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+/* --- Responsive --- */
+@media (max-width: 992px) {
+  .about-page-hero { flex-direction: column; gap: 30px; }
+  .about-page-image { width: 100%; height: 300px; }
+  .about-page-text h2 { font-size: 2rem; }
+  .about-page-stats { flex-direction: column; }
+  
+  .about-page-cards-grid { 
+    grid-template-columns: 1fr; 
+    gap: 20px; 
+    padding: 30px; 
+    min-height: auto; 
+    width: 95%;
+  }
+  
+  .about-page-card-item { border-right: none !important; border-bottom: 1px solid #e5e7eb !important; padding: 20px 0; }
+  .about-page-card-item:last-child { border-bottom: none !important; }
+}
+
+@media (max-width: 768px) {
+  .about-page-header h1 { font-size: 2.2rem; }
+  .about-page-image { height: 220px; }
+}

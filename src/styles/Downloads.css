@@ -1,0 +1,279 @@
+/* --- Downloads Page Styles --- */
+.downloads-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+/* Header with Right-Side Image */
+.downloads-header {
+  position: relative;
+  text-align: center;
+  margin-bottom: 40px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.downloads-header h1 {
+  font-size: 2.5rem;
+  color: #002D5A;
+  margin-bottom: 10px;
+  z-index: 2;
+}
+
+.downloads-header p {
+  color: #666;
+  font-size: 1rem;
+  z-index: 2;
+}
+
+/* Right-side decorative image - DISSOLVED FROM ALL SIDES */
+.downloads-header-image {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 300px;
+  max-width: 30%;
+  opacity: 0.9;
+  pointer-events: none;
+  
+  /* The "Dissolve" effect using a radial mask (fades on all edges) */
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+}
+
+/* Fallback for older browsers: A white radial gradient overlay on top of the image */
+.downloads-header-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(255,255,255,1) 75%);
+  pointer-events: none;
+}
+
+.downloads-header-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Search Bar */
+.downloads-search-bar {
+  max-width: 600px;
+  margin: 0 auto 30px auto;
+  background: #fff;
+  border-radius: 50px;
+  border: 1px solid #eef2f6;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  display: flex;
+  align-items: center;
+  padding: 5px 15px;
+}
+
+.downloads-search-bar input {
+  flex: 1;
+  padding: 12px 15px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: transparent;
+}
+
+.downloads-search-bar button {
+  background: #002D5A;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.downloads-search-bar button:hover {
+  background: #0AA5AD;
+}
+
+/* ==========================================================
+   THE BOOK TILT GRID
+   ========================================================== */
+.downloads-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  /* IMPORTANT: Adds 3D depth to the cards */
+  perspective: 1500px;
+}
+
+/* --- THE BOOK CARD --- */
+.download-card {
+  position: relative;
+  background: #fff;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+  /* Book spine and rounded edges */
+  border-radius: 8px 16px 16px 8px;
+  border-left: 5px solid #002D5A; /* The spine */
+  
+  /* 3D Effects */
+  transform-style: preserve-3d;
+  /* Default: Standing Book look */
+  transform: rotateY(8deg) rotateX(4deg);
+  
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Right side "Page Edges" */
+.download-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 12px;
+  background: linear-gradient(to right, transparent, rgba(0,0,0,0.05));
+  border-radius: 0 16px 16px 0;
+}
+
+/* --- BOOK HOVER ANIMATION (Opens up and lifts off shelf) --- */
+.download-card:hover {
+  /* Straightens perfectly and lifts */
+  transform: rotateY(0deg) rotateX(0deg) translateY(-12px);
+  border-left-color: #0AA5AD; /* Spine turns Teal */
+  box-shadow: 0 20px 40px rgba(0, 45, 90, 0.15);
+}
+
+/* Left Icon */
+.download-icon-box {
+  width: 60px;
+  height: 60px;
+  background: #fff0e6;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #dc3545;
+  flex-shrink: 0;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.download-card:hover .download-icon-box {
+  background: #dc3545;
+  color: white;
+  transform: scale(1.05) rotate(-5deg);
+}
+
+/* Content */
+.download-content {
+  flex: 1;
+  width: 100%;
+}
+
+.download-content h3 {
+  color: #002D5A;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.download-content p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.download-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  background: #eef2f6;
+  color: #555;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+/* Footer */
+.download-card-footer {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.download-stats {
+  display: flex;
+  gap: 15px;
+}
+
+.download-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.8rem;
+}
+
+.download-stat-label {
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.download-stat-value {
+  color: #002D5A;
+  font-weight: 600;
+}
+
+.download-btn {
+  background: #002D5A;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+}
+
+.download-btn:hover {
+  background: #0AA5AD;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(10, 165, 173, 0.3);
+}
+
+/* Loading & Empty State */
+.downloads-loading,
+.downloads-empty {
+  text-align: center;
+  padding: 60px 0;
+  color: #888;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .downloads-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .downloads-grid { grid-template-columns: 1fr; }
+  .downloads-header-image { display: none; }
+}

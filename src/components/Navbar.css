@@ -1,0 +1,58 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #e9edf2;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #0b2a4a;
+}
+
+.logo span {
+  color: #0077be;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  font-weight: 500;
+  color: #1f2e3f;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 1rem;
+}
+
+.nav-links a:hover {
+  color: #0077be;
+}
+
+.hamburger {
+  display: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .nav-links {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .hamburger {
+    display: block;
+  }
+}
