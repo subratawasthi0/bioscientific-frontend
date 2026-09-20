@@ -431,7 +431,7 @@ function Home() {
 
         const blogRes = await api.get("/dashboard/blogs/list");
         setBlogs(blogRes.data || []);
-        
+
         const packRes = await api.get("/dashboard/packagings/list");
         setPackagings(packRes.data || []);
       } catch (err) {
@@ -541,21 +541,31 @@ function Home() {
     };
   }, []); // Empty dependency array – runs once on mount
 
-   // --- 4. UNIVERSAL SCROLL ANIMATION OBSERVER ---
+  // --- 4. UNIVERSAL SCROLL ANIMATION OBSERVER ---
   const animatedSectionsRef = useRef(null);
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add("animate-in");
-      });
-    }, { threshold: 0.15 });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("animate-in");
+        });
+      },
+      { threshold: 0.15 },
+    );
     if (animatedSectionsRef.current) {
-      const targets = animatedSectionsRef.current.querySelectorAll(".feature-text, .quality-card, .industry-image-card, .featured-card, .testimonial-card");
-      targets.forEach((item, i) => { item.style.transitionDelay = i * 0.1 + "s"; observer.observe(item); });
+      const targets = animatedSectionsRef.current.querySelectorAll(
+        ".feature-text, .quality-card, .industry-image-card, .featured-card, .testimonial-card",
+      );
+      targets.forEach((item, i) => {
+        item.style.transitionDelay = i * 0.1 + "s";
+        observer.observe(item);
+      });
     }
-    return () => { /* cleanup */ };
+    return () => {
+      /* cleanup */
+    };
   }, []);
-  
+
   return (
     <>
       {/* --- HERO SECTION (SYNCED ANIMATION + ARROWS) --- */}
@@ -686,8 +696,8 @@ function Home() {
                 fontSize: "0.9rem", // Slightly larger
                 fontWeight: "600",
                 width: "100%",
-                justifyContent: "center", 
-                gap: "35px", 
+                justifyContent: "center",
+                gap: "35px",
                 flexWrap: "wrap",
               }}
             >
@@ -708,6 +718,45 @@ function Home() {
         </div>
       </div>
 
+      {/* ============================================================
+          COMPREHENSIVE SCIENTIFIC SOLUTIONS
+          ============================================================ */}
+
+      <section className="scientific-solutions-section">
+        <div className="scientific-solutions-inner">
+          {/* LEFT: Text Content */}
+          <div className="scientific-solutions-content">
+            {/* <p className="scientific-tag">CREST BIOSCIENTIFIC</p> */}
+            <h2>
+              Comprehensive
+              <span className="blue-text">Scientific Solutions</span>
+            </h2>
+            <h3 className="scientific-subheading">
+              One Place for Your Laboratory &amp; Scientific Needs
+            </h3>
+            <p className="scientific-desc">
+              Crest Bioscientific is a leading manufacturer and supplier of
+              laboratory chemicals, reagents and scientific products, serving
+              customers across India and global markets. With over a decade of
+              industry experience, we provide high-quality products for
+              laboratories, pharmaceutical, biotechnology, research, diagnostic
+              and industrial applications. Our portfolio includes laboratory
+              chemicals, research chemicals, laboratory reagents, glassware,
+              consumables, bulk chemicals and specialized scientific
+              products—bringing diverse laboratory requirements together under
+              one trusted name
+            </p>
+          </div>
+
+          {/* RIGHT: Image */}
+          <div className="scientific-solutions-image">
+            <img
+              src="/image16.jpg"
+              alt="Scientist using microscope in laboratory"
+            />
+          </div>
+        </div>
+      </section>
       {/* --- PRODUCT CATEGORIES (GROUPED BY CATEGORY) --- */}
       {/*}
       <section
@@ -1026,34 +1075,76 @@ function Home() {
         </div>
       </section>
 
+      {/* =========================================================
+          GLOBAL SUPPLY CAPABILITIES
+      ========================================================= */}
+      <section className="about-page-global">
+        <div className="about-page-section-title">
+          <span className="about-page-section-tag">Global Reach</span>
+          <h2>Global Supply Capabilities</h2>
+          <p>Supporting customers across India and international markets</p>
+        </div>
+        <div className="about-page-global-grid">
+          <div className="about-page-global-card">
+            <div className="about-page-global-icon">
+              <i className="fas fa-file-invoice"></i>
+            </div>
+            <h4>Export Documentation</h4>
+          </div>
+          <div className="about-page-global-card">
+            <div className="about-page-global-icon">
+              <i className="fas fa-box"></i>
+            </div>
+            <h4>Packaging</h4>
+          </div>
+          <div className="about-page-global-card">
+            <div className="about-page-global-icon">
+              <i className="fas fa-ship"></i>
+            </div>
+            <h4>Logistics Coordination</h4>
+          </div>
+          <div className="about-page-global-card">
+            <div className="about-page-global-icon">
+              <i className="fas fa-plane-departure"></i>
+            </div>
+            <h4>International Shipment Support</h4>
+          </div>
+        </div>
+      </section>
       {/* --- PARTNERS & INSIGHTS SECTION --- */}
       <section className="partners-section">
         <div className="container">
           {/* CTA Banner */}
           <div className="cta-banner">
             <h2>Ready to Partner with Us?</h2>
-            <p>Get in touch today for custom quotes, bulk orders, and technical support.</p>
+            <p>
+              Get in touch today for custom quotes, bulk orders, and technical
+              support.
+            </p>
             <Link to="/contact" className="btn-primary cta-btn">
               CONTACT SALES TEAM →
             </Link>
           </div>
 
           {/* Testimonials & Stats - 3 Column Layout */}
-          <h3 className="main-section-title">Trusted by Scientists, Chosen Worldwide.</h3>
+          <h3 className="main-section-title">
+            Trusted by Scientists, Chosen Worldwide.
+          </h3>
           <div className="testimonials-layout">
-            
             {/* LEFT: Featured Testimonial */}
             <div className="featured-testimonial">
               <span className="quote-mark">“</span>
               <p>
-                The product quality, documentation, and technical support provided
-                by Crest Bioscientific are truly world-class. They understand our
-                needs and deliver beyond expectations.
+                The product quality, documentation, and technical support
+                provided by Crest Bioscientific are truly world-class. They
+                understand our needs and deliver beyond expectations.
               </p>
               <div className="author">
                 <img src="/image1.jpg" alt="Prof. David Miller" />
                 <div>
-                  <strong>Prof. David Miller <span className="flag">🇬🇧</span></strong>
+                  <strong>
+                    Prof. David Miller <span className="flag">🇬🇧</span>
+                  </strong>
                   <span>Head of Research, Research Institute</span>
                 </div>
               </div>
@@ -1062,12 +1153,21 @@ function Home() {
             {/* MIDDLE: Small Testimonials */}
             <div className="small-testimonials">
               <div className="small-testimonial">
-                <img src="/image2.jpg" alt="Anika Sharma" className="author-img" />
+                <img
+                  src="/image2.jpg"
+                  alt="Anika Sharma"
+                  className="author-img"
+                />
                 <div>
                   <span className="quote-mark">“</span>
-                  <p>Reliable sourcing and timely shipments—exactly what we need for our lab operations.</p>
+                  <p>
+                    Reliable sourcing and timely shipments—exactly what we need
+                    for our lab operations.
+                  </p>
                   <div className="author">
-                    <strong>Anika Sharma <span className="flag">🇮🇳</span></strong>
+                    <strong>
+                      Anika Sharma <span className="flag">🇮🇳</span>
+                    </strong>
                     <span>Purchase Manager, Biotech Co.</span>
                   </div>
                 </div>
@@ -1076,9 +1176,14 @@ function Home() {
                 <img src="/image3.jpg" alt="James Lee" className="author-img" />
                 <div>
                   <span className="quote-mark">“</span>
-                  <p>Working with Crest has been a smooth and transparent experience from day one.</p>
+                  <p>
+                    Working with Crest has been a smooth and transparent
+                    experience from day one.
+                  </p>
                   <div className="author">
-                    <strong>James Lee <span className="flag">🇰🇷</span></strong>
+                    <strong>
+                      James Lee <span className="flag">🇰🇷</span>
+                    </strong>
                     <span>Supply Chain Lead, Industrial Client</span>
                   </div>
                 </div>
@@ -1092,7 +1197,10 @@ function Home() {
                 <div className="big-stat">25+</div>
                 <div className="stat-label">Countries</div>
                 <img src="/image23.jpg" alt="Globe" className="globe-img" />
-                <p>Delivering quality chemicals to laboratories and industries worldwide.</p>
+                <p>
+                  Delivering quality chemicals to laboratories and industries
+                  worldwide.
+                </p>
               </div>
               <div className="mini-stats">
                 <div className="mini-stat">
@@ -1109,42 +1217,48 @@ function Home() {
                 </div>
               </div>
             </div>
-
           </div>
 
- {/* --- KNOWLEDGE HUB (REPLACED WITH API DATA) --- */}
-           <section className="knowledge-hub">
-        <div className="container">
-          <div className="knowledge-hub-header">
-            <h3 className="section-subtitle">Knowledge Hub</h3>
-            <Link to="/blog" className="view-all-link">View All Articles →</Link>
-          </div>
-
-          <div className="knowledge-articles" ref={animatedSectionsRef}>
-            {blogs.slice(0, 3).map((blog) => (
-              <div className="knowledge-article-card" key={blog._id}>
-                <div className="knowledge-top-row">
-                  <span className="knowledge-number">0{blogs.indexOf(blog) + 1}</span>
-                  <div className="knowledge-meta">
-                    <span className="insight-tag">{blog.category}</span>
-                    <span className="insight-date">{new Date(blog.publishedAt).toLocaleDateString()}</span>
-                  </div>
-                </div>
-                <h4>{blog.title}</h4>
-                <p>{blog.excerpt || "Read our latest article."}</p>
-                <div className="knowledge-image">
-                  <img src={blog.coverImage || '/image4.jpg'} alt={blog.title} />
-                </div>
-                <Link to={`/blog/${blog._id}`} className="knowledge-link">
-                  <i className="fas fa-arrow-right"></i>
+          {/* --- KNOWLEDGE HUB (REPLACED WITH API DATA) --- */}
+          <section className="knowledge-hub">
+            <div className="container">
+              <div className="knowledge-hub-header">
+                <h3 className="section-subtitle">Knowledge Hub</h3>
+                <Link to="/blog" className="view-all-link">
+                  View All Articles →
                 </Link>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-
+              <div className="knowledge-articles" ref={animatedSectionsRef}>
+                {blogs.slice(0, 3).map((blog) => (
+                  <div className="knowledge-article-card" key={blog._id}>
+                    <div className="knowledge-top-row">
+                      <span className="knowledge-number">
+                        0{blogs.indexOf(blog) + 1}
+                      </span>
+                      <div className="knowledge-meta">
+                        <span className="insight-tag">{blog.category}</span>
+                        <span className="insight-date">
+                          {new Date(blog.publishedAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
+                    <h4>{blog.title}</h4>
+                    <p>{blog.excerpt || "Read our latest article."}</p>
+                    <div className="knowledge-image">
+                      <img
+                        src={blog.coverImage || "/image4.jpg"}
+                        alt={blog.title}
+                      />
+                    </div>
+                    <Link to={`/blog/${blog._id}`} className="knowledge-link">
+                      <i className="fas fa-arrow-right"></i>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
         </div>
       </section>
 

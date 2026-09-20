@@ -2429,3 +2429,237 @@ footer .footer-col ul li a:hover {
     grid-template-columns: 1fr;
   }
 }
+/* =========================================================
+   COMPREHENSIVE SCIENTIFIC SOLUTIONS SECTION (MATCHING IMAGE)
+   ========================================================= */
+.scientific-solutions-section {
+  background: #ffffff;
+  padding: 80px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.scientific-solutions-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 60px;
+  align-items: center;
+}
+
+/* ============ LEFT: TEXT ============ */
+.scientific-solutions-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 20px;
+}
+
+.scientific-tag {
+  color: #0aa5ad;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.scientific-solutions-content h2 {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 18px;
+  color: #002d5a;
+  letter-spacing: -1px;
+}
+
+.scientific-solutions-content h2 .blue-text {
+  color: #1a7fdb;
+  display: block;
+}
+
+.scientific-subheading {
+  font-size: 1.3rem;
+  color: #002d5a;
+  font-weight: 600;
+  margin-bottom: 22px;
+  line-height: 1.4;
+}
+
+.scientific-desc {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 30px;
+  max-width: 520px;
+}
+
+/* ============ RIGHT: IMAGE ============ */
+/* ============ RIGHT: IMAGE (with gradient dissolve) ============ */
+.scientific-solutions-image {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+
+  /* Remove any border radius since we're dissolving edges */
+  border-radius: 0;
+
+  /* Dissolve from all sides: fades left, top, bottom, and slightly right */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, black 15%, black 100%),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  -webkit-mask-composite: source-in;
+
+  mask-image:
+    linear-gradient(to right, transparent 0%, black 15%, black 100%),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  mask-composite: intersect;
+}
+
+/* Fallback: A soft white gradient overlay for older browsers */
+.scientific-solutions-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to right,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.6) 8%,
+      rgba(255, 255, 255, 0) 25%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0) 15%,
+      rgba(255, 255, 255, 0) 85%,
+      rgba(255, 255, 255, 1) 100%
+    );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.scientific-solutions-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.scientific-solutions-image:hover img {
+  transform: scale(1.03);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 992px) {
+  .scientific-solutions-section {
+    padding: 60px 20px;
+  }
+
+  .scientific-solutions-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .scientific-solutions-content {
+    padding-right: 0;
+  }
+
+  .scientific-solutions-content h2 {
+    font-size: 2.2rem;
+  }
+
+  .scientific-subheading {
+    font-size: 1.1rem;
+  }
+
+  .scientific-solutions-image {
+    height: 350px;
+  }
+}
+
+@media (max-width: 600px) {
+  .scientific-solutions-section {
+    padding: 40px 15px;
+  }
+
+  .scientific-solutions-content h2 {
+    font-size: 1.8rem;
+  }
+
+  .scientific-subheading {
+    font-size: 1rem;
+  }
+
+  .scientific-desc {
+    font-size: 0.9rem;
+  }
+
+  .scientific-solutions-image {
+    height: 250px;
+  }
+}
+
+/* =========================================================
+ GLOBAL SUPPLY CAPABILITIES GRID (4-COLUMN)
+   ========================================================= */
+.about-page-global-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-page-global-card {
+  text-align: center;
+  padding: 35px 20px;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  border-radius: 16px;
+  border: 1px solid #eef2f6;
+  transition: all 0.4s ease;
+}
+
+.about-page-global-card:hover {
+  transform: translateY(-8px);
+  border-color: #0aa5ad;
+  box-shadow: 0 15px 35px rgba(10, 165, 173, 0.15);
+}
+
+.about-page-global-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 18px;
+  background: linear-gradient(135deg, #002d5a, #0aa5ad);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-page-global-icon i {
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.about-page-global-card h4 {
+  font-size: 1rem;
+  color: #002d5a;
+  font-weight: 700;
+}
