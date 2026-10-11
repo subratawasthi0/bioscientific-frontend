@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { api } from "../api";
@@ -48,7 +47,6 @@ function Products() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 50;
 
-  // Load categories and all products.
   useEffect(() => {
     const fetchInitialData = async () => {
       setIsLoading(true);
@@ -56,15 +54,19 @@ function Products() {
       try {
         const [categoryResponse, productResponse] = await Promise.all([
           api.get("/dashboard/categories/list"),
-          api.get("/dashboard/products/list"),
+          api.get("/dashboard/products/list?page=1&limit=50"),
         ]);
 
         const categoryData = getPayload(categoryResponse);
-        const productData = getPayload(productResponse);
+        const productPayload = getPayload(productResponse);
 
         setCategories(Array.isArray(categoryData) ? categoryData : []);
 
-        setProducts(Array.isArray(productData) ? productData : []);
+        setProducts(
+          Array.isArray(productPayload?.products)
+            ? productPayload.products
+            : [],
+        );
       } catch (error) {
         console.error("Failed to load products:", error);
         setCategories([]);
@@ -381,7 +383,7 @@ function Products() {
                     <td>{product.catNo}</td>
 
                     <td className="product-name-cell">{product.productName}</td>
-                     
+
                     <td className="cas-no-cell">{product.cas}</td>
                     <td className="category-cell">
                       {getCategoryName(product)}
@@ -400,7 +402,6 @@ function Products() {
                         ? `₹${getStartingPrice(product).toLocaleString("en-IN")}`
                         : "Contact for price"}
                     </td> */}
-
 
                     {/* <td>
                       <button
