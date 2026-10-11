@@ -649,7 +649,7 @@ function Home() {
                 </div>
 
                 <div className="stat-info">
-                  <span className="stat-number">25+</span>
+                  <span className="stat-number">5+</span>
                   <span className="stat-label">Years of Exp.</span>
                 </div>
               </div>
@@ -660,7 +660,7 @@ function Home() {
                 </div>
 
                 <div className="stat-info">
-                  <span className="stat-number">500+</span>
+                  <span className="stat-number">100+</span>
                   <span className="stat-label">Happy Customers</span>
                 </div>
               </div>
@@ -671,7 +671,7 @@ function Home() {
                 </div>
 
                 <div className="stat-info">
-                  <span className="stat-number">100+</span>
+                  <span className="stat-number">3000+</span>
                   <span className="stat-label">Product Variants</span>
                 </div>
               </div>

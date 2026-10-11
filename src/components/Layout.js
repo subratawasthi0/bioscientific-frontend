@@ -227,10 +227,10 @@ const closeMenu = () => {
                   Area, Mumbai
                 </li>
                 <li>
-                  <i className="fas fa-phone"></i> +91 98765 43210
+                  <i className="fas fa-phone"></i> +91 7307426866
                 </li>
                 <li>
-                  <i className="fas fa-envelope"></i> info@namechemicals.com
+                  <i className="fas fa-envelope"></i> info@crestbioscientific.com
                 </li>
               </ul>
             </div>

@@ -27,9 +27,9 @@ function Contact() {
           <div>
             <h3 style={{ color: "#1A3C8F", marginBottom: "20px" }}>Get in Touch</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "30px" }}>
-              <div><i className="fas fa-map-marker-alt" style={{ color: "#1A3C8F", width: "25px" }}></i> 123, Industrial Area, Mumbai - 400001</div>
-              <div><i className="fas fa-phone" style={{ color: "#1A3C8F", width: "25px" }}></i> +91 98765 43210</div>
-              <div><i className="fas fa-envelope" style={{ color: "#1A3C8F", width: "25px" }}></i> info@namechemicals.com</div>
+              <div><i className="fas fa-map-marker-alt" style={{ color: "#1A3C8F", width: "25px" }}></i> B-128, 1st Floor sector 2, Gautam Buddha Nagar, Noida, Noida, Gautam Buddha Nagar- 201301, Uttar Pradesh</div>
+              <div><i className="fas fa-phone" style={{ color: "#1A3C8F", width: "25px" }}></i> +91 7307426866</div>
+              <div><i className="fas fa-envelope" style={{ color: "#1A3C8F", width: "25px" }}></i> info@crestbioscientific.com</div>
               <div><i className="fas fa-clock" style={{ color: "#1A3C8F", width: "25px" }}></i> Mon - Sat: 9:00 AM - 6:00 PM</div>
             </div>
 
