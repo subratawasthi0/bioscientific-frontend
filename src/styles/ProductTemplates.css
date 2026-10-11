@@ -199,33 +199,53 @@
   color: #666;
 }
 
+
 /* Interactive View Button */
 .view-btn-table {
   background: #002d5a;
   color: white;
-  padding: 8px 20px;
+  padding: 8px 35px 8px 20px;
   border-radius: 6px;
   border: none;
   font-size: 0.85rem;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
+  transform: none;
+  animation: none;
 }
+
+/* Arrow */
 .view-btn-table::after {
   content: "→";
   position: absolute;
-  right: -15px;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
+
+/* Hover */
 .view-btn-table:hover {
   background: #0aa5ad;
+  transform: none;
+  animation: none;
   padding-right: 35px;
 }
+
+/* Show arrow without moving it */
 .view-btn-table:hover::after {
-  right: 12px;
   opacity: 1;
+}
+
+/* Prevent movement on click/focus */
+.view-btn-table:active,
+.view-btn-table:focus {
+  transform: none;
+  animation: none;
 }
 
 /* Pagination */
