@@ -98,7 +98,8 @@ function Products() {
     setCurrentPage(1);
   }, [categories, searchParams]);
 
-  // Fetch products whenever the page changes.
+  
+  // Fetch products whenever page, search, category, or subcategory changes
   useEffect(() => {
     let cancelled = false;
 
@@ -106,30 +107,48 @@ function Products() {
       setIsLoading(true);
 
       try {
+        // Build the URL with ALL active filters
+        const queryParams = new URLSearchParams({
+          page: currentPage,
+          limit: itemsPerPage,
+          search: searchTerm.trim(),
+        });
+
+        // Only append if a specific category is selected
+        if (categoryId !== "All") {
+          queryParams.append("categoryId", categoryId);
+        }
+        
+        // Only append if a specific subcategory is selected
+        if (subCategoryId !== "All") {
+          queryParams.append("subCategoryId", subCategoryId);
+        }
+
         const response = await api.get(
-  `/dashboard/products/list?page=${currentPage}&limit=${itemsPerPage}&search=${encodeURIComponent(searchTerm.trim())}`
-);
+          `/dashboard/products/list?${queryParams.toString()}`
+        );
+        
         const payload = getPayload(response);
 
-const productList = Array.isArray(payload)
-  ? payload
-  : Array.isArray(payload?.products)
-    ? payload.products
-    : [];
+        // Handle the { products, pagination } structure returned by your backend
+        const productList = Array.isArray(payload)
+          ? payload
+          : Array.isArray(payload?.products)
+            ? payload.products
+            : [];
 
-setProducts(productList);
+        setProducts(productList);
 
-setPagination(
-  payload?.pagination ?? {
-    currentPage,
-    limit: itemsPerPage,
-    totalProducts: productList.length,
-    totalPages: 1,
-  }
-);
+        setPagination(
+          payload?.pagination ?? {
+            currentPage,
+            limit: itemsPerPage,
+            totalProducts: productList.length,
+            totalPages: 1,
+          }
+        );
       } catch (error) {
         console.error("Failed to load products:", error);
-
         if (!cancelled) {
           setProducts([]);
           setPagination({
@@ -149,7 +168,7 @@ setPagination(
     return () => {
       cancelled = true;
     };
-  },[currentPage, itemsPerPage, searchTerm]);
+  }, [currentPage, itemsPerPage, searchTerm, categoryId, subCategoryId]); // 👈 ADDED category and subcategory dependencies
 
   // Load subcategories when the category changes.
   useEffect(() => {
@@ -221,36 +240,39 @@ setPagination(
 
   // These filters currently apply to the 10 products on the loaded API page.
   // For global search/filtering, the backend list API must accept these filters.
-  const filteredProducts = products.filter((product) => {
-    const productCategoryId =
-      typeof product.primaryCategory === "object"
-        ? product.primaryCategory?._id
-        : product.primaryCategory;
+  // const filteredProducts = products.filter((product) => {
+  //   const productCategoryId =
+  //     typeof product.primaryCategory === "object"
+  //       ? product.primaryCategory?._id
+  //       : product.primaryCategory;
 
-    const productSubCategoryId =
-      typeof product.secondaryCategory === "object"
-        ? product.secondaryCategory?._id
-        : product.secondaryCategory;
+  //   const productSubCategoryId =
+  //     typeof product.secondaryCategory === "object"
+  //       ? product.secondaryCategory?._id
+  //       : product.secondaryCategory;
 
-    const matchesCategory =
-      categoryId === "All" || productCategoryId === categoryId;
+  //   const matchesCategory =
+  //     categoryId === "All" || productCategoryId === categoryId;
 
-    const matchesSubCategory =
-      subCategoryId === "All" || productSubCategoryId === subCategoryId;
+  //   const matchesSubCategory =
+  //     subCategoryId === "All" || productSubCategoryId === subCategoryId;
 
-    const search = searchTerm.trim().toLowerCase();
-    const matchesSearch =
-      !search ||
-      product.productName?.toLowerCase().includes(search) ||
-      product.catNo?.toLowerCase().includes(search) ||
-      product.cas?.toLowerCase().includes(search) ||
-      getCategoryName(product).toLowerCase().includes(search) ||
-      getSubCategoryName(product).toLowerCase().includes(search);
+  //   const search = searchTerm.trim().toLowerCase();
+  //   const matchesSearch =
+  //     !search ||
+  //     product.productName?.toLowerCase().includes(search) ||
+  //     product.catNo?.toLowerCase().includes(search) ||
+  //     product.cas?.toLowerCase().includes(search) ||
+  //     getCategoryName(product).toLowerCase().includes(search) ||
+  //     getSubCategoryName(product).toLowerCase().includes(search);
 
-      const filteredProducts = products;
-    return matchesCategory && matchesSubCategory && matchesSearch;
-  });
+  //     const filteredProducts = products;
+  //   return matchesCategory && matchesSubCategory && matchesSearch;
+  // });
 
+    // Backend already filters and paginates, so we just use the products directly
+  const filteredProducts = products;
+  
   const clearFilters = () => {
     setSearchTerm("");
     setCategoryId("All");
