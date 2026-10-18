@@ -137,7 +137,15 @@ function AdminDashboard({ onLogout }) {
         }
         if (endpoint && setter) {
           const res = await api.get(endpoint);
-          setter(res.data);
+          // Handle both plain arrays (packaging/events/blogs)
+          // and paginated objects (products)
+          const payload = res.data?.data || res.data;
+          const list = Array.isArray(payload)
+            ? payload
+            : Array.isArray(payload?.products)
+              ? payload.products
+              : [];
+          setter(list);
         }
       } catch (err) {
         alert("Failed to fetch data: " + err.message);
@@ -149,11 +157,11 @@ function AdminDashboard({ onLogout }) {
   }, [activeTab]);
 
   // --- Filtering Logic for Products ---
-  const filteredProducts =
-    categoryFilter === "All"
+  const filteredProducts = Array.isArray(products)
+    ? categoryFilter === "All"
       ? products
-      : products.filter((p) => p.category === categoryFilter);
-
+      : products.filter((p) => p.category === categoryFilter)
+    : [];
   const openAddModal = () => {
     setModalType("add");
     setCurrentItem(null);
