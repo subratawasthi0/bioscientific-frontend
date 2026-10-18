@@ -1,10 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { Link, Outlet } from "react-router-dom";
+import { api } from "../api";
 
 function Layout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isProductsOpen, setIsProductsOpen] = useState(false); // Mobile submenu toggle
+  const [isProductsOpen, setIsProductsOpen] = useState(false); 
 
+const [categories, setCategories] = useState([]);
+const [subCategories, setSubCategories] = useState({});
+
+useEffect(() => {
+  const fetchCategories = async () => {
+    try {
+      const response = await api.get("/dashboard/categories/list");
+
+      const result = response?.data?.data ?? response?.data ?? [];
+      const categoryList = Array.isArray(result) ? result : [];
+
+      setCategories(categoryList);
+
+      const subCategoryResults = await Promise.all(
+        categoryList.map(async (category) => {
+          try {
+            const subResponse = await api.get(
+              `/dashboard/subcategories/list?categoryId=${encodeURIComponent(
+                category._id
+              )}`
+            );
+
+            const subResult =
+              subResponse?.data?.data ?? subResponse?.data ?? [];
+
+            return [
+              category._id,
+              Array.isArray(subResult) ? subResult : [],
+            ];
+          } catch (error) {
+            console.error(
+              `Error loading subcategories for ${category.name}:`,
+              error
+            );
+
+            return [category._id, []];
+          }
+        })
+      );
+
+      setSubCategories(Object.fromEntries(subCategoryResults));
+    } catch (error) {
+      console.error("Error loading categories:", error);
+    }
+  };
+
+  fetchCategories();
+}, []);
+
+const closeMenu = () => {
+  setIsMenuOpen(false);
+  setIsProductsOpen(false);
+};
   return (
     <div className="App">
       {/* --- NAVBAR --- */}
@@ -53,49 +107,60 @@ function Layout() {
           </li>
 
           {/* --- UPDATED: PRODUCTS DROPDOWN --- */}
-          <li className={`dropdown-li ${isProductsOpen ? "open" : ""}`}>
-            <span
-              className="dropdown-trigger"
-              onClick={() => setIsProductsOpen(!isProductsOpen)}
-            >
-              Products <i className="fas fa-chevron-down"></i>
-            </span>
-            <ul className="dropdown-menu">
-              <li>
+        
+{/* Dynamic Products Dropdown */}
+<li
+  className={`dropdown-li ${isProductsOpen ? "open" : ""}`}
+>
+  <span
+    className="dropdown-trigger"
+    onClick={() => setIsProductsOpen(!isProductsOpen)}
+  >
+    Products <i className="fas fa-chevron-down"></i>
+  </span>
+
+  <ul className="dropdown-menu">
+    {/* Show all products */}
+    <li>
+      <Link to="/products" onClick={closeMenu}>
+        All Products
+      </Link>
+    </li>
+
+    {/* Categories from backend */}
+    {categories.map((category) => (
+      <li className="submenu-li" key={category._id}>
+        <Link
+          to={`/products?category=${encodeURIComponent(category._id)}`}
+          onClick={closeMenu}
+        >
+          {category.name}
+        </Link>
+
+        {/* Subcategories from backend */}
+        {subCategories[category._id]?.length > 0 && (
+          <ul className="submenu">
+            {subCategories[category._id].map((subCategory) => (
+              <li key={subCategory._id}>
                 <Link
-                  to="/products"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    setIsProductsOpen(false);
-                  }}
+                  to={`/products?category=${encodeURIComponent(
+                    category._id
+                  )}&subcategory=${encodeURIComponent(
+                    subCategory._id
+                  )}`}
+                  onClick={closeMenu}
                 >
-                  All Products
+                  {subCategory.name}
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/products?category=Laboratory Chemicals"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    setIsProductsOpen(false);
-                  }}
-                >
-                  Laboratory Chemicals
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/products?category=Laboratory Glasswares"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    setIsProductsOpen(false);
-                  }}
-                >
-                  Laboratory Glasswares
-                </Link>
-              </li>
-            </ul>
-          </li>
+            ))}
+          </ul>
+        )}
+      </li>
+    ))}
+  </ul>
+</li>
+
 
           <li>
             <Link to="/packaging" onClick={() => setIsMenuOpen(false)}>
@@ -158,14 +223,13 @@ function Layout() {
               <h4>Contact Us</h4>
               <ul>
                 <li>
-                  <i className="fas fa-map-marker-alt"></i> 123, Industrial
-                  Area, Mumbai
+                  <i className="fas fa-map-marker-alt"></i> B-128, 1st Floor sector 2, Gautam Buddha Nagar, Noida, Noida, Gautam Buddha Nagar- 201301, Uttar Pradesh 
                 </li>
                 <li>
-                  <i className="fas fa-phone"></i> +91 98765 43210
+                  <i className="fas fa-phone"></i> +91 7307426866
                 </li>
                 <li>
-                  <i className="fas fa-envelope"></i> info@namechemicals.com
+                  <i className="fas fa-envelope"></i> info@crestbioscientific.com
                 </li>
               </ul>
             </div>
