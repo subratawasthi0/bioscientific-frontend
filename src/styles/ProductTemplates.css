@@ -251,39 +251,44 @@
 /* Pagination */
 .pagination {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  gap: 8px;
-  margin-top: 20px;
+  justify-content: center;
+  gap: 16px;
+  margin: 24px 0;
+  flex-wrap: nowrap;
 }
-.pagination-numbers {
-  display: flex;
-  gap: 6px;
+
+.pagination .page-btn {
+  flex-shrink: 0;
+  min-width: 80px;
+  padding: 10px 16px;
+  white-space: nowrap;
 }
-.page-btn {
-  min-width: 40px;
-  padding: 8px 14px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  border-radius: 6px;
-  color: #555;
-  cursor: pointer;
-  transition: all 0.2s;
+
+.pagination-info {
+  display: inline-block;
+  white-space: nowrap;
+  text-align: center;
+  min-width: 110px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #002d5a;
 }
-.page-btn.active {
-  background: #002d5a;
-  color: #fff;
-  border-color: #002d5a;
-  transform: scale(1.05);
-}
-.page-btn:hover:not(.active):not(:disabled) {
-  border-color: #0aa5ad;
-  color: #0aa5ad;
-  transform: translateY(-2px);
-}
-.page-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+
+@media (max-width: 480px) {
+  .pagination {
+    gap: 8px;
+  }
+
+  .pagination .page-btn {
+    min-width: 70px;
+    padding: 9px 10px;
+  }
+
+  .pagination-info {
+    min-width: auto;
+    font-size: 13px;
+  }
 }
 
 /* Skeleton Loading */
@@ -570,3 +575,4 @@
     font-size: 0.9rem;
   }
 }
+

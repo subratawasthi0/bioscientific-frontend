@@ -223,8 +223,7 @@ const closeMenu = () => {
               <h4>Contact Us</h4>
               <ul>
                 <li>
-                  <i className="fas fa-map-marker-alt"></i> 123, Industrial
-                  Area, Mumbai
+                  <i className="fas fa-map-marker-alt"></i> B-128, 1st Floor sector 2, Gautam Buddha Nagar, Noida, Noida, Gautam Buddha Nagar- 201301, Uttar Pradesh 
                 </li>
                 <li>
                   <i className="fas fa-phone"></i> +91 7307426866

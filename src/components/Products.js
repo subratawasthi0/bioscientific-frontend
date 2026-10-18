@@ -8,12 +8,12 @@ const getPayload = (response) =>
 
 const getCategoryName = (product) =>
   typeof product?.primaryCategory === "object"
-    ? product.primaryCategory?.name ?? "N/A"
+    ? (product.primaryCategory?.name ?? "N/A")
     : "N/A";
 
 const getSubCategoryName = (product) =>
   typeof product?.secondaryCategory === "object"
-    ? product.secondaryCategory?.name ?? "N/A"
+    ? (product.secondaryCategory?.name ?? "N/A")
     : "N/A";
 
 const getStartingPrice = (product) => {
@@ -32,7 +32,7 @@ function Products() {
   const [products, setProducts] = useState([]);
 
   const [categoryId, setCategoryId] = useState(
-    searchParams.get("category") || "All"
+    searchParams.get("category") || "All",
   );
   const [subCategoryId, setSubCategoryId] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
@@ -47,11 +47,11 @@ function Products() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pagination, setPagination] = useState({
     currentPage: 1,
-    limit: 10,
+    limit: 50,
     totalProducts: 0,
     totalPages: 0,
   });
-  const itemsPerPage = 10;
+  const itemsPerPage = 50;
 
   // Load categories once.
   useEffect(() => {
@@ -91,7 +91,7 @@ function Products() {
       (category) =>
         category._id === categoryFromUrl ||
         category.name === categoryFromUrl ||
-        category.slug === categoryFromUrl
+        category.slug === categoryFromUrl,
     );
 
     setCategoryId(matchedCategory?._id ?? categoryFromUrl);
@@ -107,21 +107,26 @@ function Products() {
 
       try {
         const response = await api.get(
-          `/dashboard/products/list?page=${currentPage}&limit=${itemsPerPage}`
-        );
+  `/dashboard/products/list?page=${currentPage}&limit=${itemsPerPage}&search=${encodeURIComponent(searchTerm.trim())}`
+);
         const payload = getPayload(response);
 
-        if (cancelled) return;
+const productList = Array.isArray(payload)
+  ? payload
+  : Array.isArray(payload?.products)
+    ? payload.products
+    : [];
 
-        setProducts(Array.isArray(payload?.products) ? payload.products : []);
-        setPagination(
-          payload?.pagination ?? {
-            currentPage,
-            limit: itemsPerPage,
-            totalProducts: 0,
-            totalPages: 0,
-          }
-        );
+setProducts(productList);
+
+setPagination(
+  payload?.pagination ?? {
+    currentPage,
+    limit: itemsPerPage,
+    totalProducts: productList.length,
+    totalPages: 1,
+  }
+);
       } catch (error) {
         console.error("Failed to load products:", error);
 
@@ -144,7 +149,7 @@ function Products() {
     return () => {
       cancelled = true;
     };
-  }, [currentPage]);
+  },[currentPage, itemsPerPage, searchTerm]);
 
   // Load subcategories when the category changes.
   useEffect(() => {
@@ -163,7 +168,7 @@ function Products() {
 
       try {
         const response = await api.get(
-          `/dashboard/subcategories/list?categoryId=${encodeURIComponent(categoryId)}`
+          `/dashboard/subcategories/list?categoryId=${encodeURIComponent(categoryId)}`,
         );
         const data = getPayload(response);
 
@@ -242,6 +247,7 @@ function Products() {
       getCategoryName(product).toLowerCase().includes(search) ||
       getSubCategoryName(product).toLowerCase().includes(search);
 
+      const filteredProducts = products;
     return matchesCategory && matchesSubCategory && matchesSearch;
   });
 
@@ -254,10 +260,10 @@ function Products() {
   };
 
   const activeCategory = categories.find(
-    (category) => category._id === categoryId
+    (category) => category._id === categoryId,
   );
   const activeSubCategory = subCategories.find(
-    (subCategory) => subCategory._id === subCategoryId
+    (subCategory) => subCategory._id === subCategoryId,
   );
 
   return (
@@ -273,9 +279,7 @@ function Products() {
       >
         <div className="banner-text">
           <h1>
-            {activeSubCategory?.name ||
-              activeCategory?.name ||
-              "All Products"}
+            {activeSubCategory?.name || activeCategory?.name || "All Products"}
           </h1>
           <p>
             Explore our range of high-quality laboratory chemicals, reagents,
@@ -354,11 +358,7 @@ function Products() {
             ))}
         </select>
 
-        <button
-          type="button"
-          className="view-btn-table"
-          onClick={clearFilters}
-        >
+        <button type="button" className="view-btn-table" onClick={clearFilters}>
           All Products
         </button>
       </div>
@@ -408,9 +408,7 @@ function Products() {
               <tbody>
                 {filteredProducts.map((product, index) => (
                   <tr key={product._id}>
-                    <td>
-                      {(currentPage - 1) * itemsPerPage + index + 1}
-                    </td>
+                    <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                     <td>{product.catNo || "N/A"}</td>
                     <td className="product-name-cell">
                       {product.productName || "N/A"}
@@ -432,45 +430,29 @@ function Products() {
           </div>
 
           {/* Pagination driven by the backend response */}
-          {pagination.totalPages > 1 && (
+          {/* Simple pagination: Previous, page count, Next */}
+          {pagination.totalPages > 0 && (
             <div className="pagination">
               <button
                 type="button"
                 className="page-btn"
                 disabled={currentPage <= 1 || isLoading}
-                onClick={() =>
-                  setCurrentPage((page) => Math.max(1, page - 1))
-                }
+                onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
               >
                 Previous
               </button>
 
-              <div className="pagination-numbers">
-                {Array.from(
-                  { length: pagination.totalPages },
-                  (_, index) => index + 1
-                ).map((page) => (
-                  <button
-                    type="button"
-                    key={page}
-                    className={`page-btn ${currentPage === page ? "active" : ""}`}
-                    disabled={isLoading}
-                    onClick={() => setCurrentPage(page)}
-                  >
-                    {page}
-                  </button>
-                ))}
-              </div>
+              <span className="pagination-info">
+                Page {currentPage} of {pagination.totalPages}
+              </span>
 
               <button
                 type="button"
                 className="page-btn"
-                disabled={
-                  currentPage >= pagination.totalPages || isLoading
-                }
+                disabled={currentPage >= pagination.totalPages || isLoading}
                 onClick={() =>
                   setCurrentPage((page) =>
-                    Math.min(pagination.totalPages, page + 1)
+                    Math.min(pagination.totalPages, page + 1),
                   )
                 }
               >
@@ -483,10 +465,7 @@ function Products() {
 
       {/* Product details modal */}
       {isModalOpen && (
-        <div
-          className="modal-overlay"
-          onClick={() => setIsModalOpen(false)}
-        >
+        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
           <div
             className="modal-content"
             onClick={(event) => event.stopPropagation()}
