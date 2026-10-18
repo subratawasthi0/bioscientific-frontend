@@ -89,10 +89,10 @@ function Downloads() {
                     <span className="download-stat-label">Type</span>
                     <span className="download-stat-value">PDF</span>
                   </div>
-                  <div className="download-stat">
+                  {/* <div className="download-stat">
                     <span className="download-stat-label">Size</span>
-                    <span className="download-stat-value">2.4 MB</span>
-                  </div>
+                    <span className="download-stat-value"></span>
+                  </div> */}
                 </div>
                 
                 <a 
